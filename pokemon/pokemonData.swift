@@ -8,14 +8,14 @@
 import Foundation
 import SwiftUI
 
-struct ResultJson: Decodable, Identifiable{
+struct pokemoninfo: Decodable, Identifiable{
     var id: Int
     let name: String
-    let sprites:ima
+    let sprites:pokemonimage
     let types:[types]
     
     
-    struct ima:Codable{
+    struct pokemonimage:Codable{
         let front:String
         enum CodingKeys: String, CodingKey {
             case front = "front_default"
@@ -29,31 +29,27 @@ struct ResultJson: Decodable, Identifiable{
     }
 }
 
-class pokemonData:ObservableObject{
-    @Published var pokemonlist:[ResultJson] = []
+final class pokemonData:ObservableObject{
+    @Published var pokemonlist:[pokemoninfo] = []
     
     init()  {
         Task{
-            await poke()
+            await readjason()
         }
     }
     @MainActor
     
-    func poke() async  {
+    func readjason() async  {
         var num = 0
         for _ in 1...151{
             num = num + 1
-            guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon/\(num)/")
-            else{
-                return
-            }
-            print(url)
+            guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon/\(num)/")else{return}
             
             do {
                 let (data , _) = try await URLSession.shared.data(from:url)
                 print(data)
                 let decoder = JSONDecoder()
-                let json = try decoder.decode(ResultJson.self,from: data)
+                let json = try decoder.decode(pokemoninfo.self,from: data)
                 
                 pokemonlist.append(json)
             } catch {
