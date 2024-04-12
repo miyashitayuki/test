@@ -15,7 +15,6 @@ struct ResultJson: Decodable, Identifiable{
     let types:[types]
     
     
-    
     struct ima:Codable{
         let front:String
         enum CodingKeys: String, CodingKey {
@@ -25,7 +24,6 @@ struct ResultJson: Decodable, Identifiable{
     struct types:Codable{
         let type:type
     }
-    
     struct type:Codable{
         let name:String
     }
@@ -33,8 +31,7 @@ struct ResultJson: Decodable, Identifiable{
 
 class pokemonData:ObservableObject{
     @Published var pokemonlist:[ResultJson] = []
-
-
+    
     init()  {
         Task{
             await poke()
@@ -59,12 +56,9 @@ class pokemonData:ObservableObject{
                 let json = try decoder.decode(ResultJson.self,from: data)
                 
                 pokemonlist.append(json)
-//                print(json)
-                
             } catch {
                 print("エラー")
             }
-            
         }
         print(pokemonlist)
     }

@@ -9,22 +9,17 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var pokemonDatalist = pokemonData()
-
+    
     let columns = [GridItem(.fixed(180)),GridItem(.fixed(180))]
     
     var body: some View {
         NavigationStack{
             ScrollView{
-                
                 LazyVGrid(columns: columns){
-                    
-
-                        
-                        
-                        ForEach(pokemonDatalist.pokemonlist){pokemon in
-                            NavigationLink{
-                                PokemonView(itemName:pokemon)
-                            }label:{
+                    ForEach(pokemonDatalist.pokemonlist){pokemon in
+                        NavigationLink{
+                            PokemonView(itemName:pokemon)
+                        }label:{
                             ZStack{
                                 Circle()
                                     .trim(from: 0.5, to:1)
@@ -36,7 +31,6 @@ struct ContentView: View {
                                 AsyncImage(url:URL(string:pokemon.sprites.front)){image in
                                     image.image?.resizable()
                                 }
-                                
                             }
                         }
                     }
@@ -45,8 +39,6 @@ struct ContentView: View {
         }
     }
 }
-
-
 
 
 #Preview {

@@ -9,7 +9,6 @@ import SwiftUI
 
 struct PokemonView: View {
     let itemName:ResultJson
-    
     var body: some View {
         
         VStack{
@@ -23,25 +22,15 @@ struct PokemonView: View {
             Text(itemName.name)
                 .font(.title)
             
-            
-            
             if  itemName.types.count == 1  {
                 Text("\(itemName.types[0].type.name)タイプ")
             }else {
                 Text("\(itemName.types[0].type.name)タイプ")
                 Text("\(itemName.types[1].type.name)タイプ")
-                }
-            
-                
-            
-//            Text("\(itemName.types[0].type.name)タイプ")
-
             }
         }
     }
-
-
-
+}
 //#Preview {
-//    PokemonView()
+//    PokemonView(itemName: ResultJson)
 //}
