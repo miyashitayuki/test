@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var pokemonDatalist = pokemonData()
+    @StateObject var pokemonDatalist = PokemonData()
     
     let columns = [GridItem(.fixed(180)),GridItem(.fixed(180))]
     

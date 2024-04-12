@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct pokemoninfo: Decodable, Identifiable{
+struct Pokemoninfo: Decodable, Identifiable{
     var id: Int
     let name: String
     let sprites:pokemonimage
@@ -29,27 +29,27 @@ struct pokemoninfo: Decodable, Identifiable{
     }
 }
 
-final class pokemonData:ObservableObject{
-    @Published var pokemonlist:[pokemoninfo] = []
+final class PokemonData:ObservableObject{
+    @Published var pokemonlist:[Pokemoninfo] = []
     
     init()  {
         Task{
-            await readjason()
+            await FetchPokemonData()
         }
     }
     @MainActor
     
-    func readjason() async  {
+    func FetchPokemonData() async  {
         var num = 0
         for _ in 1...151{
             num = num + 1
-            guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon/\(num)/")else{return}
+            guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon/\(num)/") else { return }
             
             do {
                 let (data , _) = try await URLSession.shared.data(from:url)
                 print(data)
                 let decoder = JSONDecoder()
-                let json = try decoder.decode(pokemoninfo.self,from: data)
+                let json = try decoder.decode(Pokemoninfo.self,from: data)
                 
                 pokemonlist.append(json)
             } catch {
